@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # if driver downloaded to default downloads folder
 downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
-driver_path = os.path.join(downloads_dir, 'chromedriver.exe')
+#driver_path = os.path.join(downloads_dir, 'chromedriver.exe')
 # Replace with the path to your WebDriver if necessary
 
 @app.route('/')
@@ -19,13 +19,14 @@ def index():
 @app.route('/download', methods=['POST'])
 def download():
     wiki_url = request.form['wiki_url']
+    os.environ['PATH'] += os.pathsep + downloads_dir
     
     # Init
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     prefs = {'download.default_directory': os.path.abspath('./downloads')}
     options.add_experimental_option('prefs', prefs)
-    driver = webdriver.Chrome(executable_path=driver_path, options=options)
+    driver = webdriver.Chrome(options=options)
     try:
         driver.get(wiki_url)
 
@@ -34,7 +35,7 @@ def download():
         print_link = driver.find_element(By.LINK_TEXT, "Download as PDF")
         print_link.click()
 
-        time.sleep(5)
+        time.sleep(10)
 
         download_link = driver.find_element(By.LINK_TEXT, "Download the file")
         download_link.click()
