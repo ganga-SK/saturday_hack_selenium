@@ -41,13 +41,13 @@ def download():
 
         time.sleep(10)
 
-        download_dir = os.path.abspath('./downloads')
+        download_dir = os.path.abspath('./downloads') #getting directory with files
 
         downladed_files = os.listdir(download_dir)
 
-        pdf_file = [file for file in downladed_files if file.endswith('.pdf')][0]
+        pdf_file = [file for file in downladed_files if file.endswith('.pdf')][0] #getting first pdf file within all the downloaded files
 
-        pdf_path = os.path.join(download_dir, pdf_file)
+        pdf_path = os.path.join(download_dir, pdf_file) #creating a full path for the pdf within the download_dir
 
     finally: 
         driver.quit()
