@@ -39,3 +39,27 @@ def download():
         download_link = driver.find_element(By.LINK_TEXT, "Download the file")
         download_link.click()
 
+        time.sleep(10)
+
+        download_dir = os.path.abspath('./downloads')
+
+        downladed_files = os.listdir(download_dir)
+
+        pdf_file = [file for file in downladed_files if file.endswith('.pdf')][0]
+
+        pdf_path = os.path.join(download_dir, pdf_file)
+
+    finally: 
+        driver.quit()
+
+    return send_file(pdf_path, as_attachment=True)
+
+if __name__ == '__main__':
+    if not os.path.exists('./downloads'):
+        os.makedirs('./downloads')
+    app.run(debug=True)
+
+
+
+
+
