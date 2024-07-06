@@ -26,3 +26,16 @@ def download():
     prefs = {'download.default_directory': os.path.abspath('./downloads')}
     options.add_experimental_option('prefs', prefs)
     driver = webdriver.Chrome(executable_path=driver_path, options=options)
+    try:
+        driver.get(wiki_url)
+
+        time.sleep(2)
+
+        print_link = driver.find_element(By.LINK_TEXT, "Download as PDF")
+        print_link.click()
+
+        time.sleep(5)
+
+        download_link = driver.find_element(By.LINK_TEXT, "Download the file")
+        download_link.click()
+
